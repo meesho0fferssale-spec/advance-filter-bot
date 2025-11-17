@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: advanced-file-filter-bot
+    env: python
+    plan: free
+
+    # Render will run this in a clean Python env
+    buildCommand: pip install -r requirements.txt
+
+    # Start the bot (internal web server uses PORT env var automatically)
+    startCommand: python bot.py
+
+    envVars:
+      # --- TELEGRAM ---
+      - key: BOT_TOKEN        # BotFather token
+        sync: false
+
+      - key: API_ID           # Telegram API ID
+        sync: false
+
+      - key: API_HASH         # Telegram API Hash
+        sync: false
+
+      # --- DATABASE (MongoDB) ---
+      - key: DATABASE_URI     # e.g. from MongoDB Atlas
+        sync: false
+
+      - key: DATABASE_NAME
+        value: PIRO           # or whatever DB name you want
+
+      # --- REDIS ---
+      - key: REDIS_URI        # e.g. redis://:password@host:port/0
+        sync: false
+
+      # Optional: logging / config tweaks
+      - key: LOG_LEVEL
+        value: INFO
