@@ -1045,39 +1045,6 @@ async def initialize_bot() -> MediaSearchBot:
 
 
 def run():
-    """Main entry point WITH uvloop optimization"""
-    # Configure logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-
-    # Suppress noisy loggers
-    logging.getLogger("pyrogram").setLevel(logging.WARNING)
-    logging.getLogger("imdbpy").setLevel(logging.WARNING)
-    if sys.platform == 'linux' or sys.platform == 'linux2':
-        # Try to use uvloop if not already set
-        if not UVLOOP_AVAILABLE:
-            try:
-                import uvloop
-                asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-                logger.info("Using uvloop for better performance")
-            except ImportError:
-                logger.warning("uvloop not available, using default event loop")
-                logger.info("Install uvloop for better performance: pip install uvloop")
-
-        import resource
-        # Increase file descriptor limit
-        try:
-            resource.setrlimit(resource.RLIMIT_NOFILE, (100000, 100000))
-        except (ValueError, OSError) as e:
-            logger.debug(f"Could not set resource limit: {e}")
-            pass
-            
-    loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-
-def run():
     """Main entry point. Safe for Render / Python 3.13"""
 
     logging.basicConfig(
