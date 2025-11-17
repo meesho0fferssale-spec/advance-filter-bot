@@ -31,5 +31,4 @@ Pillow  # For image processing
 python-dateutil  # For date handling
 
 backoff
-uvloop
 vulture
